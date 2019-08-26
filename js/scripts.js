@@ -24,6 +24,7 @@ AddressBook.prototype.findContact = function(id) {
   };
   return false;
 }
+
 AddressBook.prototype.deleteContact = function(id) {
   for (var i=0; i< this.contacts.length; i++) {
     if (this.contacts[i]) {
@@ -35,6 +36,7 @@ AddressBook.prototype.deleteContact = function(id) {
   };
   return false;
 }
+
 //Business Logic for Contacts ---------------
 function Contact(firstName, lastName, phoneNumber) {
   this.firstName = firstName;
@@ -44,4 +46,17 @@ function Contact(firstName, lastName, phoneNumber) {
 Contact.prototype.fullName = function() {
   return this.firstName + " " + this.lastName
 }
-// var testContact = new Contact("Ada", "Lovelace", "503-555-1111");
+
+// User Interface Logic -----------
+var addressBook = new AddressBook();
+$(document).ready(function() {
+  $("form#new-contact").submit(function(event) {
+    event.preventDefault();
+    var inputtedFirstName = $("input#new-first-name").val();
+    var inputtedLastName = $("input#new-last-name").val();
+    var inputtedPhoneNumber = $("input#new-phone-number").val();
+    var newContact = new Contact(inputtedFirstName, inputtedLastName, inputtedPhoneNumber);
+    addressBook.addContact(newContact);
+    console.log(addressBook.contact);
+  })
+})
